@@ -19,7 +19,7 @@ const initialFieldValues = {
     gender: 'male',
     departmentId: '',
     hireDate: new Date(),
-    isPermament: false
+    isPermanent: false
 }
 
 export default function EmployeeForm() {
@@ -41,10 +41,56 @@ export default function EmployeeForm() {
                         value={values.email}
                         onChange={handleInputChange}
                     />
+                    <Controls.Input 
+                        label="City"
+                        name="city"
+                        value={values.city}
+                        onChange={handleInputChange}
+                    />
+                    <Controls.Input 
+                        label="Mobile Number"
+                        name="mobile"
+                        value={values.mobile}
+                        onChange={handleInputChange}
+                    />
                 </Grid>
                 <Grid item xs={6}>
-                    <Controls.RadioGroup name="gender" label="Gender" value={values.gender} items={genderItems} onChange={handleInputChange} />
-                    <Controls.Select name="departmentId" label="Department" value={values.departmentId} onChange={handleInputChange} options={employeeService.getDepartmentCollection} />
+                    <Controls.RadioGroup 
+                        name="gender" 
+                        label="Gender" 
+                        value={values.gender} 
+                        items={genderItems} 
+                        onChange={handleInputChange} 
+                    />
+                    <Controls.Select 
+                        name="departmentId" 
+                        label="Department" 
+                        value={values.departmentId} 
+                        onChange={handleInputChange} 
+                        options={employeeService.getDepartmentCollection()} 
+                    />
+                    <Controls.DatePicker 
+                        name="hireDate"
+                        label="Hire Date"
+                        value={values.hireDate}
+                        onChange={handleInputChange}
+                    />
+                    <Controls.Checkbox 
+                        name="isPermanent"
+                        label="Permanent Employee"
+                        value={values.isPermament}
+                        onChange={handleInputChange}
+                    />
+                    <div>
+                        <Controls.Button
+                            type="submit"
+                            text="Submit"
+                        />
+                        <Controls.Button
+                            text="Reset"
+                            color="default"
+                        />
+                    </div>
                 </Grid>
             </Grid>
         </Form>

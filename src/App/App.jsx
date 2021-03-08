@@ -32,11 +32,11 @@ const theme = createMuiTheme({
       }
     }
   },
-  props: {
-    MuiIconButton: {
-      disableRipple: true
-    }
-  }
+  // props: {
+    // MuiIconButton: {
+    //   disableRipple: true
+    // }
+  // }
 });
 
 const useStyles = makeStyles({
