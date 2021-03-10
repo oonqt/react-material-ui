@@ -24,6 +24,10 @@ export const insertEmployee = (data) => {
 }
 
 export const getAllEmployees = () => {
-    const employees = localStorage.getItem(KEYS.employees) || "[]";
-    return JSON.parse(employees);
+    const employees = JSON.parse(localStorage.getItem(KEYS.employees)) || [];
+    const departments = getDepartmentCollection();
+    return employees.map(e => ({
+        ...e,
+        department: departments[e.departmentId - 1].title
+    }));
 }
