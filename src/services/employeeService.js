@@ -23,6 +23,13 @@ export const insertEmployee = (data) => {
     localStorage.setItem(KEYS.employees, JSON.stringify(employees));
 }
 
+export const updateEmployee = (data) => {
+    const employees = getAllEmployees();
+    const recordIndex = employees.findIndex(x => x.id === data.id);
+    employees[recordIndex] = { ...data };
+    localStorage.setItem(KEYS.employees, JSON.stringify(employees));
+}
+
 export const getAllEmployees = () => {
     const employees = JSON.parse(localStorage.getItem(KEYS.employees)) || [];
     const departments = getDepartmentCollection();

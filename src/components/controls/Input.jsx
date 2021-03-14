@@ -2,7 +2,7 @@ import React from 'react';
 import { TextField } from '@material-ui/core';
 
 export default function Input(props) {
-    const { name, label, value, error=null, onChange } = props;
+    const { name, label, value, error=null, onChange, ...others } = props;
 
     return (
         <TextField 
@@ -12,6 +12,7 @@ export default function Input(props) {
             value={value}
             onChange={onChange}
             {...(error && { error: true, helperText: error })}
+            {...others}
         />
     )
 }
