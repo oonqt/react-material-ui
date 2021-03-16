@@ -13,6 +13,8 @@ import EmployeeForm from "./EmployeeForm";
 import Controls from "../../components/controls/Controls";
 import PageHeader from "../../components/PageHeader";
 import Popup from "../../components/Popup";
+import Notification from "../../components/Notification";
+import ConfirmDialog from "../../components/ConfirmDialog";
 
 const useStyles = makeStyles(theme => ({
     pageContent: {
@@ -42,6 +44,8 @@ export default function Employees() {
     const [records, setRecords] = useState(employeeService.getAllEmployees());
     const [filterFn, setFilterFn] = useState({ fn: items => items });
     const [openPopup, setOpenPopup] = useState(false);
+    const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' });
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subtitle: '' });
 
     const { TblContainer, TblHead, TblPagination, recordsAfterPagingAndSorting } = useTable(records, headCells, filterFn);
 
@@ -58,10 +62,25 @@ export default function Employees() {
         } else {
             employeeService.updateEmployee(employee);
         }
+
         resetForm();
-        setRecordForEdit(null);
         setOpenPopup(false);
         setRecords(employeeService.getAllEmployees());
+        setNotify({
+            isOpen: true,
+            message: 'Successfully submitted',
+            type: 'success'
+        });
+    }
+
+    const onDelete = (id) => {
+        employeeService.deleteEmployee(id);
+        setRecords(employeeService.getAllEmployees());
+        setNotify({
+            isOpen: true,
+            message: 'Deleted successfully',
+            type: 'error'
+        });
     }
 
     const openInPopup = item => {
@@ -111,6 +130,12 @@ export default function Employees() {
                                         </Controls.ActionButton>
                                         <Controls.ActionButton
                                             color="secondary"
+                                            onClick={() => setConfirmDialog({
+                                                isOpen: true,
+                                                title: "Are you sure you want to delete this record",
+                                                subtitle: "You cannot undo this action",
+                                                onConfirm: () => onDelete(item.id)
+                                            })}
                                         >
                                             <CloseIcon fontSize="small" />
                                         </Controls.ActionButton>
@@ -128,6 +153,14 @@ export default function Employees() {
                     recordForEdit={recordForEdit}
                 />
             </Popup>
+            <Notification 
+                notify={notify}
+                setNotify={setNotify}
+            />
+            <ConfirmDialog 
+                confirmDialog={confirmDialog}
+                setConfirmDialog={setConfirmDialog}
+            />
         </>
     )
 }

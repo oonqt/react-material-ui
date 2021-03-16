@@ -16,14 +16,19 @@ const generateEmployeeId = () => {
     return id;
 }
 
-export const insertEmployee = (data) => {
+export const deleteEmployee = id => {
+    const employees = getAllEmployees().filter(e => e.id !== id);
+    localStorage.setItem(KEYS.employees, JSON.stringify(employees));
+}
+
+export const insertEmployee = data => {
     const employees = getAllEmployees();
     data['id'] = generateEmployeeId();
     employees.push(data);
     localStorage.setItem(KEYS.employees, JSON.stringify(employees));
 }
 
-export const updateEmployee = (data) => {
+export const updateEmployee = data => {
     const employees = getAllEmployees();
     const recordIndex = employees.findIndex(x => x.id === data.id);
     employees[recordIndex] = { ...data };
